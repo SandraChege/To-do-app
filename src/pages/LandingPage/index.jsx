@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
+import './index.css';
 
 function landingPage(){
     return(
         <section>
-            <div id="landPage">
+            <div className="landPage">
                 <div className="landcontainer">
                     <h2 className="landtitle">Doingly</h2>
                     <div className="landimg">

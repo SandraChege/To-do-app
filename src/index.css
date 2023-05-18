@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.todoapp{
+  max-width: 700px;
+  max-height: 800px;
+  margin: 0 auto;
+}
