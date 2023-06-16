@@ -1,0 +1,47 @@
+.namesection{
+    background-color: #DDA0DD;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 50%, 0% 100%);
+}
+.namesection p{
+    padding: 5px;
+}
+.namesection p:first-child{
+    margin-top: 100px; /*remove this*/
+    padding-top: 10px;
+}
+.namesection span{
+    font-size: 20px;
+}
+.namesection p:last-of-type{
+    padding-bottom: 20px;
+}
+/*LIST OF TASKS*/
+.task-items{
+    list-style-type: none;
+    background-color: red;
+    padding: 10px 5px;
+    margin: 8px;
+    /* margin-bottom: ; */
+}
+.homenavigation{
+    background-color: #D9D9D9;
+    clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+}
+.icons {
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    padding: 10px;
+}
+.topCenterIcon {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.houseIcon, .userIcon{
+    padding-top: 40px;
+}
+.plusIcon {
+    margin-top: -10px;
+}
+

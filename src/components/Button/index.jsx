@@ -1,8 +1,9 @@
 import React from "react";
 
 const Button = (props) => {
+
     return (
-        <button>
+        <button onClick={props.myHandler}>
             {props.text || 'button'}
         </button>
     )
