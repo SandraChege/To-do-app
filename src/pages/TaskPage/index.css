@@ -1,0 +1,29 @@
+.task-icons{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #D9D9D9;
+}
+.more-icon{
+    margin-left: auto;
+}
+/* .task-name{
+    background-color: #D9D9D9;
+    padding: 5px;
+    font-size: 24px;
+    text-align: center;
+    margin-top: -1em;
+    font-weight: 700;
+} */
+.task-input{
+    border: none;
+    outline: none;
+    padding: 5px;
+    background-color: #D9D9D9;
+    font-size: 20px;
+    text-align: center;
+    margin-top: -1em;
+    font-weight: 700; 
+}

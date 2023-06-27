@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 
-function contactPage(){
+function ContactPage(){
     return(
         <section>
             <div className="contactContainer">
@@ -10,4 +10,4 @@ function contactPage(){
         </section>
     )
 }
-export default contactPage;
+export default ContactPage;
