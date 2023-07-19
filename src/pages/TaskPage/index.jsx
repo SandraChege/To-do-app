@@ -8,21 +8,16 @@ import { HOMEPAGE} from '../../Routes';
 
 function Taskpage(){
   //CREATE AND SAVE TASK NAME
-    const [taskName, setTaskName] = useState('');
+    const [taskName, setTaskName] = useState(['']);
 
     const handleTaskNameChange = (e) => {
         setTaskName(e.target.value);
     };
     // Creating tasks
-  const [tasks, setTasks] = useState(['']); //variable tasks represent an empty task
-  const inputRefs=useRef([]); //store reference to input fiels
-
-  const handleTaskChange = (index, event) => { //update task array
-    const newTasks = [...tasks];
-    newTasks[index] = event.target.value;
-    setTasks(newTasks);
-  };
-
+  const [tasks, setTasks] = useState([{ task: '', completed: false }]); //variable tasks represent an empty task
+  const inputRefs=useRef([]); //store reference to input fields
+  const [focusedIndex, setFocusedIndex] = useState(-1);
+  
   const handleKeyPress = (index, event) => { //adds empty task when enter is pressed
     if (event.key === 'Enter') {
       const newTasks = [...tasks];
@@ -30,29 +25,38 @@ function Taskpage(){
       setTasks(newTasks);
     }
   };
+  
+  useEffect(() => {
+    if (inputRefs.current && inputRefs.current.length > 0) {
+      setTimeout(() => {
+        inputRefs.current[inputRefs.current.length - 1].focus();
+      }, 0);
+    }
+  }, [tasks]); {/*useEffect hook to focus on the latest input field whenever the tasks state changes. This ensures that the cursor moves to the newly created input field*/}
+
+  const handleToggleTask = (index) => { //The handleToggleTask function modifies the code to strike through when completed
+    const newTasks = [...tasks];
+    newTasks[index].completed = !newTasks[index].completed;
+    setTasks(newTasks);
+  };
+
+  const handleTaskChange = (index, event) => { //update task array
+    const newTasks = [...tasks];
+    newTasks[index] = { ...newTasks[index], task: event.target.value };
+    setTasks(newTasks);
+  };
+
 
   const handleTaskClick = (index) => { //allows mdification of earlier task by moving cursor
     inputRefs.current[index].focus();
   };
 
 
-  // useEffect(() => {
-  //   if (inputRefs.current && inputRefs.current.length > 0) {
-  //     inputRefs.current[inputRefs.current.length - 1].focus();
-  //   }
-  // }, [tasks]);
-
-  const handleRemoveTask = (index) => { //removes tasks when checkbox clicked
-    const newTasks = [...tasks];
-    newTasks.splice(index, 1);
-    setTasks(newTasks);
-  };
-
-  useEffect(() => {
-    if (inputRefs.current && inputRefs.current.length > 0) {
-      inputRefs.current[inputRefs.current.length - 1].focus();
-    }
-  }, [tasks]); {/*useEffect hook to focus on the latest input field whenever the tasks state changes. This ensures that the cursor moves to the newly created input field*/}
+  // const handleRemoveTask = (index) => { //removes tasks when checkbox clicked
+  //   const newTasks = [...tasks];
+  //   newTasks.splice(index, 1);
+  //   setTasks(newTasks);
+  // };
 
 
 
@@ -75,9 +79,9 @@ function Taskpage(){
                 </div>
                 <div className="task-lists">
                   {tasks.map((task, index) => (
-                        <div key={index} onClick={() => handleTaskClick(index)}>
-                          <input type="checkbox" onChange={() => handleRemoveTask(index)} />
-                          <input type="text" value= {task} className= "task-items" onChange={(event) => handleTaskChange(index, event)} onKeyPress={(event) => handleKeyPress(index, event)} ref={(el) => (inputRefs.current[index] = el)}/> 
+                        <div key={index} checked={task.completed} onClick={() => handleTaskClick(index)}>
+                          <input type="checkbox" checked={task.completed} onChange={() => handleToggleTask(index)}/>
+                          <input type="text" value= {task.task} className= "task-items" onChange={(event) => handleTaskChange(index, event)} onKeyPress={(event) => handleKeyPress(index, event)} ref={(el) => (inputRefs.current[index] = el)} style={{textDecoration: task.completed ? 'line-through' : 'none',}}/> 
                           {/* ref={(el) => (inputRefs.current[index] = el)} => store its reference in the inputRefs array
                           onKeyPress={(event) => handleKeyPress(index, event)} */}
                         </div>
