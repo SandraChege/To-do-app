@@ -17,16 +17,11 @@
 }
 /*LIST OF TASKS*/
 .home-tasklist{
-    overflow-y: auto;
-    max-height: 400px;
+    overflow: auto;
 }
-.task-items{
-    list-style-type: none;
-    background-color: red;
-    padding: 10px 5px;
-    margin: 8px;
-}
-
+.home-tasklist::-webkit-scrollbar {
+    display: none;
+} 
 /*NAVIGATION BAR*/
 .homenavigation{
     background-color: #D9D9D9;

@@ -18,3 +18,6 @@ code {
   margin: 0 auto;
   background-color: #E6E6FA;
 }
+.task-input{ 
+  width: 100%;
+}

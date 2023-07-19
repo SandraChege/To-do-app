@@ -5,8 +5,23 @@ import { faHouse, faCirclePlus, faUser } from '@fortawesome/free-solid-svg-icons
 import { Link } from 'react-router-dom';
 import { HOMEPAGE, TASKPAGE, CONTACTPAGE } from '../../Routes';
 import Task from '../../components/Task/task';
+/*useRef hook to create references to the namesection, homenavigation, and homeTasklist elements. 
+ useEffect hook is then used to calculate the heights and apply them to the homeTasklist element.
+*/
+import { useRef, useEffect } from 'react';
 
 function Homepage(){
+    const namesectionRef = useRef(null);
+    const homenavigationRef = useRef(null);
+    const homeTasklistRef = useRef(null);
+
+  useEffect(() => {
+    console.log("Hello");
+    const namesectionHeight = namesectionRef.current.clientHeight;
+    const homenavigationHeight = homenavigationRef.current.clientHeight;
+    const remainingHeight = window.innerHeight - namesectionHeight - homenavigationHeight;
+    homeTasklistRef.current.style.height = `${remainingHeight}px`;
+  }, []);
     const tasks = ["Walk the dog", "Feed the dog", "Wash the dog", "hello", "Write a blog post",
     "Research vacation destinations",
     "Organize digital files",
@@ -32,20 +47,20 @@ function Homepage(){
     "Start a journal",
     "Try a new workout routine"
     ];
-    const newTask = {
-        // text: taskText,
-        backgroundColor: '#F2F2F2',
-    };
+    // const newTask = {
+    //     // text: taskText,
+    //     backgroundColor: '#F2F2F2',
+    // };
     return(
         <section>
             <div className="homePage">
                 <div className="homecontainer">
-                    <div className="namesection">
+                    <div ref={namesectionRef} className="namesection">
                         <p>Hello <span>FETCH NAME</span> <br/> </p>
                         <p>This are all your tasks</p>
                     </div>
 
-                    <div className="home-tasklist">
+                    <div ref={homeTasklistRef} className="home-tasklist">
                         {
                             tasks.map(task=>{
                                 return <Task text= {task} />
@@ -54,7 +69,7 @@ function Homepage(){
                         {/* <Task text= "WALK THE DOG"  backColor={{backgroundColor:"yellow"}} /> */}
                     </div>
 
-                    <div className="homenavigation">
+                    <div ref={homenavigationRef} className="homenavigation">
                         <div className="icons">
                             <div className="leftIcon">
                                 <Link to={HOMEPAGE}>

@@ -11,9 +11,9 @@ function App() {
   return (
     <div className="todoapp">
       <Routes>
-        <Route path={HOMEPAGE} element={<Homepage />} />
-        <Route path={TASKPAGE} element={<Taskpage />} />
-        <Route path={CONTACTPAGE} element={<Contactpage />} />  
+        <Route path={HOMEPAGE}  element={<Homepage />} />
+        <Route path={TASKPAGE}  element={<Taskpage />} />
+        <Route path={CONTACTPAGE}  element={<Contactpage />} />  
         
         <Route path="*" element={<LandingPage/> } /> 
       </Routes>
