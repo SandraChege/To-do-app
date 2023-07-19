@@ -15,8 +15,7 @@ function Taskpage(){
     };
     // Creating tasks
   const [tasks, setTasks] = useState(['']); //variable tasks represent an empty task
-  const inputRefs = useRef([]);
-
+  const inputRefs=useRef([]); //store reference to input fiels
 
   const handleTaskChange = (index, event) => { //update task array
     const newTasks = [...tasks];
@@ -32,6 +31,11 @@ function Taskpage(){
     }
   };
 
+  const handleTaskClick = (index) => { //allows mdification of earlier task by moving cursor
+    inputRefs.current[index].focus();
+  };
+
+
   // useEffect(() => {
   //   if (inputRefs.current && inputRefs.current.length > 0) {
   //     inputRefs.current[inputRefs.current.length - 1].focus();
@@ -43,6 +47,12 @@ function Taskpage(){
     newTasks.splice(index, 1);
     setTasks(newTasks);
   };
+
+  useEffect(() => {
+    if (inputRefs.current && inputRefs.current.length > 0) {
+      inputRefs.current[inputRefs.current.length - 1].focus();
+    }
+  }, [tasks]); {/*useEffect hook to focus on the latest input field whenever the tasks state changes. This ensures that the cursor moves to the newly created input field*/}
 
 
 
@@ -65,9 +75,11 @@ function Taskpage(){
                 </div>
                 <div className="task-lists">
                   {tasks.map((task, index) => (
-                        <div key={index}>
+                        <div key={index} onClick={() => handleTaskClick(index)}>
                           <input type="checkbox" onChange={() => handleRemoveTask(index)} />
-                          <input type="text" value= {task} className= "task-items" onChange={(event) => handleTaskChange(index, event)} onKeyPress={(event) => handleKeyPress(index, event)} ref={(el) => (inputRefs.current[index] = el)} /> {/* ref={(el) => (inputRefs.current[index] = el)} onKeyPress={(event) => handleKeyPress(index, event)} */}
+                          <input type="text" value= {task} className= "task-items" onChange={(event) => handleTaskChange(index, event)} onKeyPress={(event) => handleKeyPress(index, event)} ref={(el) => (inputRefs.current[index] = el)}/> 
+                          {/* ref={(el) => (inputRefs.current[index] = el)} => store its reference in the inputRefs array
+                          onKeyPress={(event) => handleKeyPress(index, event)} */}
                         </div>
                   ))}
                 </div>
