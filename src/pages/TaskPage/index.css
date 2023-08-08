@@ -9,6 +9,9 @@
 .more-icon{
     margin-left: auto;
 }
+.backicon, .moreicon{
+    color: black;
+}
 /* .task-name{
     background-color: #D9D9D9;
     padding: 5px;
@@ -38,6 +41,11 @@
     background-color: #E6E6FA;
     padding-top: 5px;
     padding-bottom: 5px;
-    font-weight: 500;
-    
+    font-weight: 500;   
 }
+.tasklists{
+    overflow: auto;
+}
+.tasklists::-webkit-scrollbar {
+    display: none;
+} 

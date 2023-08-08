@@ -16,7 +16,6 @@ function Taskpage(){
     // Creating tasks
   const [tasks, setTasks] = useState([{ task: '', completed: false }]); //variable tasks represent an empty task
   const inputRefs=useRef([]); //store reference to input fields
-  const [focusedIndex, setFocusedIndex] = useState(-1);
   
   const handleKeyPress = (index, event) => { //adds empty task when enter is pressed
     if (event.key === 'Enter') {
@@ -30,7 +29,7 @@ function Taskpage(){
     if (inputRefs.current && inputRefs.current.length > 0) {
       setTimeout(() => {
         inputRefs.current[inputRefs.current.length - 1].focus();
-      }, 0);
+      }, 100);
     }
   }, [tasks]); {/*useEffect hook to focus on the latest input field whenever the tasks state changes. This ensures that the cursor moves to the newly created input field*/}
 
@@ -58,6 +57,16 @@ function Taskpage(){
   //   setTasks(newTasks);
   // };
 
+   const namesectionRef = useRef(null);
+  const TasklistRef = useRef(null);
+ 
+
+  useEffect(() => {
+    const namesectionHeight = namesectionRef.current.clientHeight;
+    const remainingHeight = window.innerHeight - namesectionHeight;
+    TasklistRef.current.style.height = `${remainingHeight}px`;
+  }, []);
+
 
 
     return(
@@ -66,18 +75,18 @@ function Taskpage(){
                 <div className="task-icons">
                     <div className="back-icon">
                         <Link to= {HOMEPAGE} >
-                            <FontAwesomeIcon icon={faChevronLeft} size="2xl"/>
+                            <FontAwesomeIcon icon={faChevronLeft} size="2xl" className="backicon"/>
                         </Link> 
                     </div>
                     <div className="more-icon">
-                        <FontAwesomeIcon icon={faEllipsis} size="2xl" />
+                        <FontAwesomeIcon icon={faEllipsis} size="2xl" className="moreicon"/>
                     </div> 
                 </div>
-                <div className="task-name">
+                <div className="task-name" ref={namesectionRef}>
                     {/* <p>personal</p> */}
                     <input type="text" value={taskName} onChange={handleTaskNameChange} placeholder="Enter task name" className="task-input"/> {/*value={taskName} onChange={handleTaskNameChange}*/}
                 </div>
-                <div className="task-lists">
+                <div className="tasklists" ref={TasklistRef}>
                   {tasks.map((task, index) => (
                         <div key={index} checked={task.completed} onClick={() => handleTaskClick(index)}>
                           <input type="checkbox" checked={task.completed} onChange={() => handleToggleTask(index)}/>
