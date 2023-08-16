@@ -37,7 +37,8 @@ function Taskpage(){
       //   inputRefs.current[inputRefs.current.length - 1].focus();
       // }, 1000);
     }
-  }, [tasks]); {/*useEffect hook to focus on the latest input field whenever the tasks state changes. This ensures that the cursor moves to the newly created input field*/}
+  }, [tasks]); {/*useEffect hook to focus on the latest input field whenever the tasks state changes. 
+                This ensures that the cursor moves to the newly created input field*/}
 
   const handleToggleTask = (index) => { //The handleToggleTask function modifies the code to strike through when completed
     const newTasks = [...tasks];
@@ -53,9 +54,14 @@ function Taskpage(){
 
   const handleKeyPress = (index, event) => { //adds empty task when enter is pressed
     if (event.key === 'Enter') {
-      const newTasks = [...tasks];
-      newTasks.push({ task: '', completed: false })
-      setTasks(newTasks);
+      const currentInputValue = event.target.value;
+
+      if(currentInputValue.match(/^[a-zA-Z0-9]+$/)){
+        const newTasks = [...tasks];
+        newTasks.push({ task: '', completed: false })
+        setTasks(newTasks);
+
+      }
     }
   };
   
