@@ -26,19 +26,9 @@ function Taskpage(){
   };
   
   //CREATE AND SAVE LIST OF TASKS
-  const [tasks, setTasks] = useState([{ task: '', completed: false }]); //variable tasks represent an empty task
   const inputRefs=useRef([]); //store reference to input fields
-  
-  
+  const [tasks, setTasks] = useState([{ task: '', completed: false }]); //variable tasks represent an empty task
 
-  useEffect(() => {
-    if (inputRefs.current && inputRefs.current.length > 0) {
-      // setTimeout(() => {
-      //   inputRefs.current[inputRefs.current.length - 1].focus();
-      // }, 1000);
-    }
-  }, [tasks]); {/*useEffect hook to focus on the latest input field whenever the tasks state changes. 
-                This ensures that the cursor moves to the newly created input field*/}
 
   const handleToggleTask = (index) => { //The handleToggleTask function modifies the code to strike through when completed
     const newTasks = [...tasks];
@@ -59,11 +49,16 @@ function Taskpage(){
       if(currentInputValue.match(/^[a-zA-Z0-9]+$/)){
         const newTasks = [...tasks];
         newTasks.push({ task: '', completed: false })
-        setTasks(newTasks);
+        setTasks(newTasks); 
 
+        //Focus on the newly added input field
+        if (inputRefs.current[index + 1]) {
+          inputRefs.current[index + 1].focus();
+        }
       }
     }
   };
+
   
   const handleTaskClick = (index) => { //allows mdification of earlier task by moving cursor
     inputRefs.current[index].focus();
