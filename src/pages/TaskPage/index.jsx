@@ -17,7 +17,6 @@ function Taskpage(){
     taskListRef.current.style.height = `${remainingHeight}px`;
   }, []);
 
-
   //Creates and save task Name
   const [taskName, setTaskName] = useState('');
 
@@ -36,33 +35,39 @@ function Taskpage(){
     setTasks(newTasks);
   };
 
-  const handleTaskChange = (event) => { //update task array
+  const handleTaskChange = (index, event) => { //update task array
     const newTasks = [...tasks];
-    newTasks[0] = { ...newTasks[0], task: event.target.value };
+    newTasks[index] = { ...newTasks[index], task: event.target.value};
     setTasks(newTasks);
   };
 
   const handleKeyPress = (index, event) => { //adds empty task when enter is pressed
     if (event.key === 'Enter') {
       const currentInputValue = event.target.value;
+      // const {target: {value: currentInputValue} }= event;
 
-      if(currentInputValue.match(/^[a-zA-Z0-9]+$/)){
+      if(currentInputValue.match(/^[a-zA-Z0-9\s]+$/)){ // Check if the current input consists of alphanumeric characters
         const newTasks = [...tasks];
         newTasks.push({ task: '', completed: false })
         setTasks(newTasks); 
 
         //Focus on the newly added input field
-        if (inputRefs.current[index + 1]) {
-          inputRefs.current[index + 1].focus();
-        }
+        // if (inputRefs.current[index + 1]) {
+        //   inputRefs.current[index + 1].focus();
+        // }
+        console.log("updated tasks:", newTasks)
       }
     }
   };
 
-  
-  const handleTaskClick = (index) => { //allows mdification of earlier task by moving cursor
-    inputRefs.current[index].focus();
-  };
+  useEffect( ( ) =>{
+    //Focus on the newly added input field
+    if (inputRefs.current[tasks.length - 1]) {
+      inputRefs.current[tasks.length - 1].focus();
+      console.log(tasks);
+    } }, [tasks] 
+
+    );
 
     return(
       <section>
@@ -89,9 +94,6 @@ function Taskpage(){
 
           {/*TASK LIST STARTS*/}
           <div className="tasklists" ref={taskListRef}>
-    
-            
-            
             {tasks.map((task, index) => (
               <div>
                 <input type="checkbox" checked={false} 
@@ -100,9 +102,9 @@ function Taskpage(){
               
               <input type="text" value={tasks[index].task} 
                 className= "task-items" 
-                onChange={(event) => handleTaskChange(event)} 
+                onChange={(event) => handleTaskChange(index, event)} 
                 ref={(el) => (inputRefs.current[index] = el)} 
-                style={{textDecoration: true ? 'line-through' : 'none',}}
+                // style={{textDecoration: true ? 'line-through' : 'none',}}
                 onKeyDown={(e)=>handleKeyPress(index, e)}
               />
               </div>
