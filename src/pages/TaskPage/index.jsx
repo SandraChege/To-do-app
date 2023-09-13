@@ -93,19 +93,26 @@ function Taskpage(){
           {/* NAME SECTION ENDS */}
 
           {/*TASK LIST STARTS*/}
+          {/* TASK RENDERING */}
           <div className="tasklists" ref={taskListRef}>
             {tasks.map((task, index) => (
-              <div>
-                <input type="checkbox" checked={false} 
-                onChange={() => handleToggleTask(index)}
+              <div key={index} className={task.completed ? "task-completed": ""}>
+                <input 
+                  type="checkbox" 
+                  checked={task.completed} 
+                  onChange={() => handleToggleTask(index)}
                 />
               
-              <input type="text" value={tasks[index].task} 
-                className= "task-items" 
-                onChange={(event) => handleTaskChange(index, event)} 
-                ref={(el) => (inputRefs.current[index] = el)} 
-                // style={{textDecoration: true ? 'line-through' : 'none',}}
-                onKeyDown={(e)=>handleKeyPress(index, e)}
+              <input 
+                type = "text" 
+                value = {tasks[index].task} 
+                className = "task-items" 
+                onChange = {(event) => handleTaskChange(index, event)} 
+                ref = {(el) => (inputRefs.current[index] = el)} 
+                onKeyDown = {(e) =>handleKeyPress(index, e)}
+                style = {{ 
+                  textDecoration: task.completed ? 'line-through' : 'none',
+                }}
               />
               </div>
             ))}
