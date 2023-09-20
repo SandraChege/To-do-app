@@ -26,7 +26,7 @@ function Taskpage(){
   
   //CREATE AND SAVE LIST OF TASKS
   const inputRefs=useRef([]); //store reference to input fields
-  const [tasks, setTasks] = useState([{ task: '', completed: false }]); //variable tasks represent an empty task
+  const [tasks, setTasks] = useState([{ task: '', completed: false }]); //Initialize variable tasks represent an empty task
 
 
   const handleToggleTask = (index) => { //The handleToggleTask function modifies the code to strike through when completed
@@ -68,6 +68,40 @@ function Taskpage(){
     } }, [tasks] 
 
     );
+    //TASK EDITING
+
+    /* 
+      Manage the state i.e track whether a task is in edit mode or not
+      1. Use an array to track each individual. If i want to track the entire component use const (isEditing, setIsEditing) = useState(false);
+      2. Initializing the isEditing with tasks.length ensures that there is a one on one correspondence btwn tasks and editing mode
+      3. State set to false to indicate no task is in edit mode initially
+      4. By doing so, when a user clicks on a specifc task to edit it, only the clicked task state will change.
+    */
+    const [isEditing, setIsEditing] = useState(Array(tasks.length).fill(false));
+    /*
+      Functio toggles the edit mode.
+      1. The function below takes index as a parameter to identify which task is being edited.
+      2. Create a new array `newIsEditing` and spread the elements of `isEditing` in it. 
+      3. `newIsEditing[index] = true`updates an element at a specific index to true since it was initially false
+    */
+    
+    const handleTaskClick = (index) => {
+      const newIsEditing = [...isEditing];
+      newIsEditing[index] = true;
+      setIsEditing(newIsEditing);
+    };
+    /*
+      Blur event occurs when an element looses focus.
+      The function below is responsible for exiting the 
+      1.The function below takes index as a parameter to identify which task is being affected by blur event.
+      2.Create a new array `newIsEditing` and spread the elements of `isEditing` in it.
+      3. `newIsEditing[index] = false`updates an element at a specific index to false since it was initially true i.e task leaves edit mode to read mode after loosing focus
+    */
+    const handleTaskBlur = (index) => {
+      const newIsEditing = [...isEditing];
+      newIsEditing[index] = false;
+      setIsEditing(newIsEditing);
+    };
 
     return(
       <section>
@@ -96,24 +130,32 @@ function Taskpage(){
           {/* TASK RENDERING */}
           <div className="tasklists" ref={taskListRef}>
             {tasks.map((task, index) => (
-              <div key={index} className={task.completed ? "task-completed": ""}>
+              <div key={index} className={task.completed ? "task-completed" : ""}>
+                
                 <input 
                   type="checkbox" 
                   checked={task.completed} 
                   onChange={() => handleToggleTask(index)}
-                />
-              
-              <input 
-                type = "text" 
-                value = {tasks[index].task} 
-                className = "task-items" 
-                onChange = {(event) => handleTaskChange(index, event)} 
-                ref = {(el) => (inputRefs.current[index] = el)} 
-                onKeyDown = {(e) =>handleKeyPress(index, e)}
-                style = {{ 
-                  textDecoration: task.completed ? 'line-through' : 'none',
-                }}
-              />
+                /> 
+        
+                {isEditing[index] ? (
+                  <input 
+                    type="text" 
+                    value = {tasks[index].task} 
+                    className = "task-items" 
+                    onChange = {(event) => handleTaskChange(index, event)} 
+                    ref = {(el) => (inputRefs.current[index] = el)} 
+                    onKeyDown = {(e) => handleKeyPress(index, e)}
+                    onBlur = {() => handleTaskBlur(index)} 
+                    style = {{ 
+                      textDecoration: task.completed ? 'line-through' : 'none', 
+                    }}
+                  />
+                ) : (
+                  <span onClick={() => handleTaskClick(index)}>
+                    {tasks[index].task}
+                  </span>
+                )}
               </div>
             ))}
           </div>

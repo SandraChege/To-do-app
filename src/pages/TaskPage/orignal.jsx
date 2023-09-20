@@ -87,7 +87,11 @@ function Taskpage(){
                   {tasks.map((task, index) => (
                         <div key={index} checked={task.completed} onClick={() => handleTaskClick(index)}>
                           <input type="checkbox" checked={task.completed} onChange={() => handleToggleTask(index)}/>
-                          <input type="text" value= {task.task} className= "task-items" onChange={(event) => handleTaskChange(index, event)} onKeyPress={(event) => handleKeyPress(index, event)} ref={(el) => (inputRefs.current[index] = el)} style={{textDecoration: task.completed ? 'line-through' : 'none',}}/> 
+                          <input type="text" value= {task.task} className= "task-items" 
+                          onChange={(event) => handleTaskChange(index, event)} 
+                          onKeyPress={(event) => handleKeyPress(index, event)} 
+                          ref={(el) => (inputRefs.current[index] = el)} 
+                          style={{textDecoration: task.completed ? 'line-through' : 'none',}}/> 
                           {/* ref={(el) => (inputRefs.current[index] = el)} => store its reference in the inputRefs array
                           onKeyPress={(event) => handleKeyPress(index, event)} */}
                         </div>

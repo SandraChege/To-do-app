@@ -56,3 +56,7 @@
 .tasklists::-webkit-scrollbar {
     display: none;
 } 
+/* .task-completed {
+    text-decoration: line-through;
+    color: red; 
+} */
